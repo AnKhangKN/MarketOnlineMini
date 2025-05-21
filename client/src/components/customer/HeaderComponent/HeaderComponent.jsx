@@ -1,106 +1,123 @@
 import { Col, Row } from "antd";
 import React from "react";
+import { ContainerSearch, IconButton, MainHeader } from "./style";
 import logoRmBG from "../../../assets/logo/LogoMarketOnlineMini-removebg-preview.png";
-import { HiOutlineSearch, HiShoppingCart, HiUser } from "react-icons/hi";
+import { HiOutlineShoppingCart, HiOutlineUser } from "react-icons/hi2";
+import { FiSearch } from "react-icons/fi";
+import logoDo from "../../../assets/logo/LogoMarketOnlineMiniDo.png";
 
 const HeaderComponent = () => {
   return (
-    <div style={{ backgroundColor: "#d0011b", color: "#fff" }}>
-      <div
-        style={{
-          maxWidth: "1440px",
-          margin: "auto",
-          padding: "0px 20px",
-          height: "34px",
-        }}
+    <div
+      style={{
+        backgroundColor: "#d0011b",
+        color: "#fff",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 10,
+      }}
+    >
+      <Row
+        className="d-md-flex d-none m-auto"
+        style={{ maxWidth: "1200px", fontSize: "16px", lineHeight: "34px" }}
       >
-        <Row className="d-md-flex d-none">
-          <Col md={12}>hihi</Col>
-          <Col md={12}>hihi</Col>
-        </Row>
-      </div>
+        <Col
+          className="d-flex align-items-center justify-content-start gap-3"
+          span={12}
+        >
+          <div>Kênh bán hàng</div>
+          <div>Trở thành người bán hàng</div>
+          <div>Kết nối</div>
+        </Col>
+        <Col
+          className="d-flex align-items-center justify-content-end gap-3"
+          span={12}
+        >
+          <div>Thông báo</div>
+          <div>Hỗ trợ</div>
+          <div>Đăng kí</div>
+          <div>Đăng nhập</div>
+        </Col>
+      </Row>
 
-      <div
-        style={{
-          maxWidth: "1440px",
-          margin: "auto",
-          padding: "0px 20px",
-          height: "85px ",
-        }}
-      >
-        {/* Header nội dung */}
-        <Row align="middle" justify="space-between">
-          {/* Logo */}
-          <Col xs={0} sm={0} md={6} className="d-md-flex d-none flex-column">
+      <MainHeader className="d-flex align-items-center m-auto">
+        <Col xs={0} sm={0} md={4} className="d-md-flex flex-column f-none">
+          <div style={{ width: "60px" }}>
             <img
+              style={{ width: "100%", objectFit: "cover" }}
               src={logoRmBG}
-              alt="Market Online Mini"
-              style={{
-                width: "60px",
-                height: "60px",
-                objectFit: "contain",
-                marginRight: "8px",
-              }}
+              alt=""
             />
-            <div style={{ fontSize: "18px" }}>Market Online Mini</div>
-          </Col>
-
-          {/* Search */}
-          <Col xs={19} sm={19} md={14}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                backgroundColor: "#fff",
-                height: "40px",
-                padding: "4px 8px",
-              }}
-            >
-              <input
-                type="text"
-                placeholder="Tìm sản phẩm..."
+          </div>
+          <div>Market online mini</div>
+        </Col>
+        <Col
+          xs={20}
+          sm={20}
+          md={16}
+          style={{ paddingRight: "20px" }}
+          className="d-flex flex-column gap-2"
+        >
+          <ContainerSearch className="d-flex align-items-center">
+            <Col xs={2} sm={2} md={2}>
+              <div className="d-flex align-items-center justify-content-center">
+                <FiSearch />
+              </div>
+            </Col>
+            <Col xs={19} sm={19} md={18}>
+              <div>
+                <input
+                  className="w-100"
+                  style={{ border: "none", outline: "none" }}
+                  type="text"
+                />
+              </div>
+            </Col>
+            <Col xs={3} sm={3} md={4}>
+              <div className="d-md-flex d-none align-items-center justify-content-center">
+                <button>Tìm kiếm</button>
+              </div>
+              <div
                 style={{
-                  flex: 1,
-                  border: "none",
-                  outline: "none",
-                  fontSize: "16px",
-                }}
-              />
-              <button
-                style={{
-                  backgroundColor: "#d0011b",
-                  color: "#fff",
-                  border: "none",
-                  padding: "6px 12px",
-                  borderRadius: "4px",
+                  width: "30px",
+                  height: "30px",
+                  marginLeft: "5px",
                   cursor: "pointer",
                 }}
+                className="d-flex d-md-none align-items-center justify-content-center"
               >
-                <HiOutlineSearch
-                  style={{
-                    color: "#fff",
-                    fontSize: "20px",
-                    marginRight: "8px",
-                  }}
-                />
-              </button>
-            </div>
-          </Col>
-
-          {/* Cart */}
-          <Col xs={5} sm={5} md={4}>
-            <div className="d-flex align-items-center justify-content-end gap-4">
-              <div className="d-flex d-md-none">
-                <HiUser style={{ fontSize: "28px" }} />
+                <img className="w-100 object-fit-cover" src={logoDo} alt="" />
               </div>
+            </Col>
+          </ContainerSearch>
+          <div
+            className="d-md-flex d-none align-items-center gap-3"
+            style={{ fontSize: "12px", lineHeight: "15px" }}
+          >
+            <div>Kem Chống Nắng Elixir</div>
+            <div>Quạt Cầm Tay Goojodoq</div>
+            <div>Marshall Major V</div>
+            <div>Quạt Goojodoq Sò Lạnh</div>
+            <div>Kệ 9 Ngăn</div>
+          </div>
+        </Col>
+        <Col
+          xs={4}
+          sm={4}
+          md={4}
+          className="d-flex align-items-center justify-content-center gap-4"
+        >
+          <IconButton>
+            <HiOutlineShoppingCart />
+          </IconButton>
 
-              <div>
-                <HiShoppingCart style={{ fontSize: "28px" }} />
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </div>
+          <IconButton className="d-md-none d-flex">
+            <HiOutlineUser />
+          </IconButton>
+        </Col>
+      </MainHeader>
     </div>
   );
 };
