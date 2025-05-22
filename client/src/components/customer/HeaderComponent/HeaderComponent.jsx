@@ -1,10 +1,17 @@
 import { Col, Row } from "antd";
 import React from "react";
-import { ContainerSearch, IconButton, MainHeader } from "./style";
+import {
+  ContainerSearch,
+  CountProductInCart,
+  IconButton,
+  IconButtonUser,
+  MainHeader,
+} from "./style";
 import logoRmBG from "../../../assets/logo/LogoMarketOnlineMini-removebg-preview.png";
 import { HiOutlineShoppingCart, HiOutlineUser } from "react-icons/hi2";
 import { FiSearch } from "react-icons/fi";
 import logoDo from "../../../assets/logo/LogoMarketOnlineMiniDo.png";
+import ButtonComponent from "../ButtonComponent/ButtonComponent";
 
 const HeaderComponent = () => {
   return (
@@ -21,11 +28,12 @@ const HeaderComponent = () => {
     >
       <Row
         className="d-md-flex d-none m-auto"
-        style={{ maxWidth: "1200px", fontSize: "16px", lineHeight: "34px" }}
+        style={{ maxWidth: "1200px", lineHeight: "34px" }}
       >
         <Col
           className="d-flex align-items-center justify-content-start gap-3"
           span={12}
+          style={{ fontSize: "13px" }}
         >
           <div>Kênh bán hàng</div>
           <div>Trở thành người bán hàng</div>
@@ -34,6 +42,7 @@ const HeaderComponent = () => {
         <Col
           className="d-flex align-items-center justify-content-end gap-3"
           span={12}
+          style={{ fontSize: "13px" }}
         >
           <div>Thông báo</div>
           <div>Hỗ trợ</div>
@@ -72,18 +81,19 @@ const HeaderComponent = () => {
                   className="w-100"
                   style={{ border: "none", outline: "none" }}
                   type="text"
+                  placeholder="Tìm kiếm ..."
                 />
               </div>
             </Col>
             <Col xs={3} sm={3} md={4}>
               <div className="d-md-flex d-none align-items-center justify-content-center">
-                <button>Tìm kiếm</button>
+                <ButtonComponent name="Tìm kiếm" width="95%" height="32px" />
               </div>
               <div
                 style={{
                   width: "30px",
                   height: "30px",
-                  marginLeft: "5px",
+                  marginLeft: "10px",
                   cursor: "pointer",
                 }}
                 className="d-flex d-md-none align-items-center justify-content-center"
@@ -92,16 +102,6 @@ const HeaderComponent = () => {
               </div>
             </Col>
           </ContainerSearch>
-          <div
-            className="d-md-flex d-none align-items-center gap-3"
-            style={{ fontSize: "12px", lineHeight: "15px" }}
-          >
-            <div>Kem Chống Nắng Elixir</div>
-            <div>Quạt Cầm Tay Goojodoq</div>
-            <div>Marshall Major V</div>
-            <div>Quạt Goojodoq Sò Lạnh</div>
-            <div>Kệ 9 Ngăn</div>
-          </div>
         </Col>
         <Col
           xs={4}
@@ -110,12 +110,13 @@ const HeaderComponent = () => {
           className="d-flex align-items-center justify-content-center gap-4"
         >
           <IconButton>
+            <CountProductInCart>99</CountProductInCart>
             <HiOutlineShoppingCart />
           </IconButton>
 
-          <IconButton className="d-md-none d-flex">
+          <IconButtonUser className="d-md-none d-flex">
             <HiOutlineUser />
-          </IconButton>
+          </IconButtonUser>
         </Col>
       </MainHeader>
     </div>

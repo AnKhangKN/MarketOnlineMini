@@ -1,5 +1,6 @@
 import { Button, Col, Row } from "antd";
 import React, { useState } from "react";
+import { ItemSuggestion } from "./style";
 
 const SuggestionToday = () => {
   const itemsPerRow = 5;
@@ -23,7 +24,7 @@ const SuggestionToday = () => {
       <h4>Gợi ý hôm nay</h4>
       <Row gutter={[16, 16]}>
         {visibleProducts.map((product) => (
-          <Col key={product.id} flex="20%">
+          <ItemSuggestion key={product.id}>
             <div
               style={{
                 border: "1px solid #eee",
@@ -34,7 +35,7 @@ const SuggestionToday = () => {
             >
               {product.name}
             </div>
-          </Col>
+          </ItemSuggestion>
         ))}
       </Row>
 

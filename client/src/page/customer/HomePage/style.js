@@ -1,5 +1,14 @@
 import styled from "styled-components";
 
+export const Wrapper = styled.div`
+  background-color: #f5f5fa;
+  margin-top: 119px;
+
+  @media (max-width: 768px) {
+    margin-top: 60px;
+  }
+`;
+
 export const ItemCategory = styled.div`
   gap: 10px;
   display: flex;
@@ -21,5 +30,6 @@ export const TitleCategory = styled.div`
 export const WrapperComponent = styled.div`
   background-color: #fff;
   padding: 20px;
+  border-radius: 5px;
   margin-top: 16px;
 `;

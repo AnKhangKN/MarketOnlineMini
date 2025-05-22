@@ -12,6 +12,33 @@ export const MainHeader = styled(Row)`
 
 export const IconButton = styled.div`
   font-size: 30px;
+  position: relative;
+  @media screen and (max-width: 767px) {
+    font-size: 25px;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
+export const CountProductInCart = styled.div`
+  position: absolute;
+  top: 0px;
+  right: -8px;
+  border-radius: 50%;
+  font-size: 10px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  background-color: #333;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const IconButtonUser = styled.div`
+  font-size: 30px;
   @media screen and (max-width: 767px) {
     font-size: 25px;
     height: 30px;
