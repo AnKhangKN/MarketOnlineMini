@@ -1,4 +1,23 @@
 const Product = require("../../models/Product");
+const ProductServices = require("./ProductServices");
+
+const createProduct = async (data) => {
+  try {
+
+    const data = await ProductServices.createProduct();
+
+    return {
+      status: "OK",
+      message: "Tạo sản phẩm thành công",
+      data: data,
+    };
+
+  } catch (error) {
+    throw {
+      message: error.message || "Internal Server Error",
+    };
+  }
+}
 
 const getAllProducts = async () => {
   try {
@@ -11,11 +30,12 @@ const getAllProducts = async () => {
     };
   } catch (error) {
     throw {
-      message: error.message || "Lỗi server",
+      message: error.message || "Internal Server Error",
     };
   }
 };
 
 module.exports = {
   getAllProducts,
+  createProduct
 };
