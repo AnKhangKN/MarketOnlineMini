@@ -8,6 +8,9 @@ const ButtonComponent = ({
   color = "#fff",
   bdRadius = "2px",
   onClick,
+  icon = null,
+  iconPosition = "left", // hoặc "right"
+  border = "none",
 }) => {
   return (
     <button
@@ -15,15 +18,17 @@ const ButtonComponent = ({
         height,
         width,
         backgroundColor: bgColor,
+        border,
         color,
         borderRadius: bdRadius,
-        border: "none",
         outline: "none",
         cursor: "pointer",
       }}
       onClick={onClick}
     >
-      {name}
+      {icon && iconPosition === "left" && <span>{icon}</span>}
+      <span>{name}</span>
+      {icon && iconPosition === "right" && <span>{icon}</span>}
     </button>
   );
 };

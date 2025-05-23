@@ -1,14 +1,9 @@
 import { Col, Row } from "antd";
 import React from "react";
-import logoDo from "../../../assets/logo/LogoMarketOnlineMiniDo.png";
-import {
-  ItemCategory,
-  TitleCategory,
-  WrapperComponent,
-  Wrapper,
-} from "./style";
+import { WrapperComponent, Wrapper } from "./style";
 import SuggestionToday from "../../../components/customer/SuggestionToday/SuggestionToday";
 import SlideComponent from "../../../components/customer/SlideComponent/SlideComponent";
+import CategoryComponent from "../../../components/customer/CategoryComponent/CategoryComponent";
 
 const HomePage = () => {
   return (
@@ -33,49 +28,7 @@ const HomePage = () => {
                 borderRadius: "5px",
               }}
             >
-              <div style={{ fontWeight: "bold" }}>Danh mục</div>
-              <ItemCategory>
-                <div style={{ width: "50px" }}>
-                  <img
-                    style={{ width: "50px", objectFit: "cover" }}
-                    src={logoDo}
-                    alt=""
-                  />
-                </div>
-                <TitleCategory>Tên danh mục</TitleCategory>
-              </ItemCategory>
-              <ItemCategory>
-                <div style={{ width: "50px" }}>
-                  <img
-                    style={{ width: "50px", objectFit: "cover" }}
-                    src={logoDo}
-                    alt=""
-                  />
-                </div>
-                <TitleCategory>Tên danh mục</TitleCategory>
-              </ItemCategory>
-              <ItemCategory>
-                <div style={{ width: "50px" }}>
-                  <img
-                    style={{ width: "50px", objectFit: "cover" }}
-                    src={logoDo}
-                    alt=""
-                  />
-                </div>
-                <TitleCategory>Tên danh mục</TitleCategory>
-              </ItemCategory>
-              <ItemCategory>
-                <div style={{ width: "50px" }}>
-                  <img
-                    style={{ width: "50px", objectFit: "cover" }}
-                    src={logoDo}
-                    alt=""
-                  />
-                </div>
-                <TitleCategory>
-                  Tên danh mục hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-                </TitleCategory>
-              </ItemCategory>
+              <CategoryComponent />
             </div>
           </Col>
           <Col xs={24} sm={24} md={24} lg={19}>

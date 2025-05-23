@@ -12,8 +12,19 @@ import { HiOutlineShoppingCart, HiOutlineUser } from "react-icons/hi2";
 import { FiSearch } from "react-icons/fi";
 import logoDo from "../../../assets/logo/LogoMarketOnlineMiniDo.png";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
+import { useNavigate } from "react-router-dom";
 
 const HeaderComponent = () => {
+  const navigate = useNavigate();
+
+  const handleNavigateLogin = () => {
+    navigate("/login");
+  };
+
+  const handleNavigateSignUp = () => {
+    navigate("/signup");
+  };
+
   return (
     <div
       style={{
@@ -46,8 +57,8 @@ const HeaderComponent = () => {
         >
           <div>Thông báo</div>
           <div>Hỗ trợ</div>
-          <div>Đăng kí</div>
-          <div>Đăng nhập</div>
+          <div onClick={handleNavigateSignUp}>Đăng kí</div>
+          <div onClick={handleNavigateLogin}>Đăng nhập</div>
         </Col>
       </Row>
 
