@@ -16,7 +16,7 @@ const generateRefreshToken = (payload) => {
     );
 }
 
-const authenticateToken = async (refreshToken) => {
+const handleRefreshToken = async (refreshToken) => {
     try {
         const user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
 
@@ -28,7 +28,6 @@ const authenticateToken = async (refreshToken) => {
 
         return {
             status: "OK",
-            message: "Đăng nhập thành công",
             access_token,
         };
 
@@ -43,5 +42,5 @@ const authenticateToken = async (refreshToken) => {
 module.exports = {
     generateAccessToken,
     generateRefreshToken,
-    authenticateToken
+    handleRefreshToken
 };

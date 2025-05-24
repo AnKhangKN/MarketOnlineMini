@@ -57,10 +57,9 @@ const signInUser = async (email, password) => {
 
         return {
             message: "Đăng nhập thành công",
-            data: {
-                accessToken: accessToken,
-                refreshToken: refreshToken
-            },
+            accessToken,
+            refreshToken
+
         };
 
     } catch (error) {
