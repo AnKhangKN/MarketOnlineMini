@@ -1,10 +1,9 @@
 const Product = require("../../models/Product");
-const ProductServices = require("./ProductServices");
 
 const createProduct = async (data) => {
   try {
 
-    const data = await ProductServices.createProduct();
+    const data = await Product.createProduct();
 
     return {
       status: "OK",

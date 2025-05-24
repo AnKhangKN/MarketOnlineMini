@@ -9,7 +9,15 @@ const reportSchema = new mongoose.Schema({
         enum: ["pending", "resolved", "dismissed"],
         default: "pending",
     },
-}, { _id: false }); // Nếu không cần _id riêng cho từng report
+});
+
+const adminWarningSchema = new mongoose.Schema({
+    message: { type: String },
+    bannedUntil: { type: Date },
+    countBanned: { type: Number, default: 0 },
+    adminId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    createdAt: { type: Date, default: Date.now }
+}, { _id: false });
 
 const shopSchema = new mongoose.Schema({
     shopName: { type: String, default: "" },
@@ -36,15 +44,9 @@ const shopSchema = new mongoose.Schema({
     // Tổng số sản phẩm đã bán thành công
     soldCount: { type: Number, default: 0 },
 
-    bannedUntil: { type: Date },
+    adminWarnings: [adminWarningSchema],
 
-    adminWarnings: [{
-        message: { type: String },
-        adminId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-        createdAt: { type: Date, default: Date.now }
-    }],
-
-    reports: [reportSchema], // dùng schema con
+    reports: [reportSchema],
 
 }, {
     timestamps: true,

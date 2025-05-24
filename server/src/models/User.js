@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
     avatar: { type: String, default: "" },
 
     email: { type: String, required: true, unique: true },
-    isVerified: { type: Boolean, default: false },
+    // isVerified: { type: Boolean, default: false },
 
     password: { type: String, required: true },
 
@@ -45,8 +45,8 @@ const userSchema = new mongoose.Schema({
     isAdmin: { type: Boolean, default: false },
     isVendor: { type: Boolean, default: false },
 
-    accessToken: { type: String, select: false },
-    refreshToken: { type: String, select: false },
+    accessToken: { type: String },
+    refreshToken: { type: String },
 
     // Danh sách yêu thích
     wishProducts: [wishProductsSchema],

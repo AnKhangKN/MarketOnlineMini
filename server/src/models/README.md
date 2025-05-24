@@ -31,3 +31,11 @@ Cart model
 - Chỉ những sản phẩm nào được chọn mua mới mất trong giỏ hàng còn lại sẽ còn.
 
 Chat model
+- Lưu lại các cuộc hội thoại.
+
+Message model
+- Lưu lại người đã chat và nội dung hội thoại.
+
+Review model
+- Lưu lại nội dung comment chỉ những đơn hàng nhỏ đã được hoàn thành thì người dùng mới có thể comment, chấm điểm, thêm ảnh (nếu có) cho sản phẩm.
+
