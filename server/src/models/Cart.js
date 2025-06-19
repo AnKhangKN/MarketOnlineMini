@@ -17,7 +17,8 @@ const productItemsSchema = new mongoose.Schema({
 
     attributes: [attributeSchema],
 
-    price: { type: Number, required: true },
+    price: { type: Number, required: true, min: 0 },
+
     quantity: { type: Number, required: true, min: 1 },
 
     shopId: {

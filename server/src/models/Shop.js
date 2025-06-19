@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const reportSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     reason: { type: String, required: true },
+    isReported: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
     status: {
         type: String,
@@ -14,21 +15,24 @@ const reportSchema = new mongoose.Schema({
 const adminWarningSchema = new mongoose.Schema({
     message: { type: String },
     bannedUntil: { type: Date },
+    isBanned: { type: Boolean, default: false },
     countBanned: { type: Number, default: 0 },
     adminId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     createdAt: { type: Date, default: Date.now }
 }, { _id: false });
 
 const shopSchema = new mongoose.Schema({
-    shopName: { type: String, default: "" },
+    shopName: { type: String, required: true, maxlength: 100 },
 
-    description: { type: String, default: "" },
+    description: { type: String, default: "", maxlength: 1000  },
 
-    city: { type: String, default: "" },
+    shopAvatar: { type: String, default: "" },
 
-    address: { type: String, default: "" },
+    city: { type: String, required: true },
 
-    phone: { type: String, default: "" },
+    address: { type: String, required: true },
+
+    phone: { type: String, required: true },
 
     state: { type: String, enum: ['active', 'pending', 'inactive'], default: 'pending' },
 
@@ -47,7 +51,6 @@ const shopSchema = new mongoose.Schema({
     adminWarnings: [adminWarningSchema],
 
     reports: [reportSchema],
-
 }, {
     timestamps: true,
 });

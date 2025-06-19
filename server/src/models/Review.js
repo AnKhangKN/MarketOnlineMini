@@ -29,23 +29,17 @@ const reviewSchema = new mongoose.Schema({
     comment: {
         type: String,
         default: "",
+        maxlength: 1000
     },
 
     images: [{
         type: String,  // URL hoặc đường dẫn ảnh
     }],
-
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-
-    updatedAt: {
-        type: Date,
-    }
 }, {
     timestamps: true
 });
+
+reviewSchema.index({ productId: 1 });  // Tăng tốc khi lọc tất cả review của 1 sản phẩm
 
 const Review = mongoose.model("Review", reviewSchema);
 

@@ -13,15 +13,15 @@ const productItemSchema = new mongoose.Schema({
         required: true,
     },
 
-    product_name: { type: String, required: true },
+    productName: { type: String, required: true },
 
-    product_image: { type: String, required: true },
+    productImage: { type: String, required: true },
 
-    attribute: [attributeSchema],
+    attributes: [attributeSchema],
 
-    price: { type: Number, required: true },
+    price: { type: Number, required: true, min: 0 },
 
-    quantity: { type: Number, required: true },
+    quantity: { type: Number, required: true, min: 0  },
 
     shopId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -32,7 +32,7 @@ const productItemSchema = new mongoose.Schema({
     // Trạng thái riêng của từng sản phẩm
     status: {
         type: String,
-        enum: ["pending", "processing", "shipped", "delivered", "returned"],
+        enum: ["pending", "processing", "shipped", "delivered", "returned", "cancelled"],
         default: "pending",
         required: true,
     },
@@ -64,6 +64,12 @@ const productItemSchema = new mongoose.Schema({
     refundReason: {
         type: String,
         default: ""
+    },
+
+    // Lý do hủy đơn
+    cancelReason: {
+        type: String,
+        default: ""
     }
 }, { _id: false });
 
@@ -78,9 +84,9 @@ const orderSchema = new mongoose.Schema({
     items: [productItemSchema], // Danh sách sản phẩm
 
     shippingAddress: {
-        city: { type: String, default: "" },
-        address: { type: String, default: "" },
-        phone: { type: String, default: "" },
+        city: { type: String, required: true },
+        address: { type: String, required: true },
+        phone: { type: String, required: true },
     },
 
     paymentMethod: {

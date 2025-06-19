@@ -6,9 +6,11 @@ const chatSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     }],
+
     lastMessage: {
-        type: String,
-        default: ""
+        senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        text: { type: String, default: "" },
+        createdAt: { type: Date }
     }
 }, {
     timestamps: true,

@@ -16,10 +16,16 @@ const messageSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+
+    mediaUrl: { type: String },  // Hỗ trợ gửi ảnh
+
     isRead: {
         type: Boolean,
         default: false
-    }
+    },
+
+    isDeleted: { type: Boolean, default: false },
+
 }, {
     timestamps: true,
 });

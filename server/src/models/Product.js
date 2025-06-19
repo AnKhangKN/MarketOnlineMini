@@ -1,24 +1,25 @@
 const mongoose = require("mongoose");
 
 const attributeSchema = new mongoose.Schema({
-    name: String,
-    value: String,
+    name: { type: String, required: true, trim: true },
+    value: { type: String, required: true, trim: true },
 }, { _id: false });
 
-// Định nghĩa 1 tổ hợp giá: gồm nhiều thuộc tính + giá + số lượng tồn
+// Nhiều thuộc tính + giá + số lượng tồn
 const priceOptionSchema = new mongoose.Schema({
     attributes: [attributeSchema],
-    price: { type: Number, required: true },
-    stock: { type: Number, required: true },
+    price: { type: Number, required: true, min: 0 },
+    stock: { type: Number, required: true, min: 0 },
 }, { _id: false });
 
 // Schema chính của sản phẩm
 const productSchema = new mongoose.Schema({
-    productName: { type: String, required: true },
+    productName: { type: String, required: true, trim: true },
 
-    images: [
-        {type: String, required: false}
-    ],
+    images: {
+        type: [String],
+        default: [],
+    },
 
     category: { type: String, required: true },
 
@@ -26,9 +27,13 @@ const productSchema = new mongoose.Schema({
 
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop', required: true },
 
-    priceOptions: [priceOptionSchema],
+    priceOptions: {
+        type: [priceOptionSchema],
+        validate: [v => v.length > 0, 'Sản phẩm phải có ít nhất một biến thể giá'],
+    },
 
-    sold: { type: Number, default: 0 },
+    // Số lượng đã bán được
+    soldCount: { type: Number, default: 0 },
 
     status: {
         type: String,
@@ -36,7 +41,7 @@ const productSchema = new mongoose.Schema({
         default: "active",
     },
 
-    banned_until: { type: Date },
+    bannedUntil: { type: Date },
 
     adminWarnings: [{
         message: { type: String },
@@ -44,7 +49,8 @@ const productSchema = new mongoose.Schema({
         createdAt: { type: Date, default: Date.now }
     }],
 
-    rating: { type: Number, default: 0, min: 0, max: 5 },
+    // Điểm trung bình của sản phẩm
+    numRating: { type: Number, default: 0 },
 
     followers: { type: Number, default: 0 },
 
@@ -64,6 +70,10 @@ const productSchema = new mongoose.Schema({
 }, {
     timestamps: true,
 });
+
+productSchema.index({ shopId: 1 });
+productSchema.index({ category: 1 });
+productSchema.index({ status: 1 });
 
 const Product = mongoose.model("Product", productSchema);
 

@@ -1,23 +1,5 @@
 const Product = require("../../models/Product");
 
-const createProduct = async (data) => {
-  try {
-
-    const data = await Product.createProduct();
-
-    return {
-      status: "OK",
-      message: "Tạo sản phẩm thành công",
-      data: data,
-    };
-
-  } catch (error) {
-    throw {
-      message: error.message || "Internal Server Error",
-    };
-  }
-}
-
 const getAllProducts = async () => {
   try {
     const data = await Product.find();
@@ -36,5 +18,4 @@ const getAllProducts = async () => {
 
 module.exports = {
   getAllProducts,
-  createProduct
 };

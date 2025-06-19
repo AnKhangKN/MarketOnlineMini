@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 // Địa chỉ giao hàng
 const shippingAddressSchema = new mongoose.Schema({
-    phone: { type: String, default: "" },
-    city: { type: String, default: "" },
-    address: { type: String, default: "" },
+    phone: { type: String, required: false },
+    city: { type: String, required: false,},
+    address: { type: String, required: false,},
 }, {
     _id: true,
 });
@@ -12,8 +12,8 @@ const shippingAddressSchema = new mongoose.Schema({
 // Sản phẩm yêu thích - cần giới hạn số sản phẩm yêu thích
 const wishProductsSchema = new mongoose.Schema({
     productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-    productName: { type: String, default: "" },
-    images: { type: String, default: "" },
+    productName: { type: String, required: false, },
+    images: { type: String }
 }, {
     _id: false,
 });
@@ -21,26 +21,26 @@ const wishProductsSchema = new mongoose.Schema({
 // Shop yêu thích - cần giới hạn số shop yêu thích
 const wishShopsSchema = new mongoose.Schema({
     shopId: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' },
-    shopName: { type: String, default: "" },
-    images: { type: String, default: "" },
+    shopName: { type: String,required: false, },
+    images: { type: String, required: false, },
 }, {
     _id: false,
 });
 
 // Người dùng
 const userSchema = new mongoose.Schema({
-    userName: { type: String, default: "" },
     fullName: { type: String, default: "" },
-    avatar: { type: String, default: "" },
+    avatar: { type: String },
 
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true, index: true },
+    // sẽ xử lý sau
     // isVerified: { type: Boolean, default: false },
 
     password: { type: String, required: true },
 
     shippingAddress: [shippingAddressSchema],
 
-    wallet: { type: Number, default: 0 },
+    wallet: { type: Number, default: 0, min: 0 },
 
     isAdmin: { type: Boolean, default: false },
     isVendor: { type: Boolean, default: false },
@@ -55,6 +55,10 @@ const userSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
+
+userSchema.index({ isVendor: 1 });
+userSchema.index({ isAdmin: 1 });
+
 
 const User = mongoose.model('User', userSchema);
 
