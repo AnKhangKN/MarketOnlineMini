@@ -1,10 +1,11 @@
-import { Col, Row } from "antd";
+import { Col, Modal, Row } from "antd";
 import React from "react";
 import {
   ContainerSearch,
   CountProductInCart,
-  IconButton,
+  IconButtonCart,
   IconButtonUser,
+  ModalCart,
   MainHeader,
 } from "./style";
 import logoRmBG from "../../../assets/logo/LogoMarketOnlineMini-removebg-preview.png";
@@ -17,12 +18,11 @@ import { useNavigate } from "react-router-dom";
 const HeaderComponent = () => {
   const navigate = useNavigate();
 
-  const handleNavigateLogin = () => {
-    navigate("/login");
-  };
-
-  const handleNavigateSignUp = () => {
-    navigate("/signup");
+  const navigation = {
+    toLogin: () => navigate("/login"),
+    toSignup: () => navigate("/signup"),
+    toHome: () => navigate("/"),
+    toCart: () => navigate("/cart"),
   };
 
   return (
@@ -57,21 +57,23 @@ const HeaderComponent = () => {
         >
           <div>Thông báo</div>
           <div>Hỗ trợ</div>
-          <div onClick={handleNavigateSignUp}>Đăng kí</div>
-          <div onClick={handleNavigateLogin}>Đăng nhập</div>
+          <div onClick={navigation.toSignup}>Đăng kí</div>
+          <div onClick={navigation.toLogin}>Đăng nhập</div>
         </Col>
       </Row>
 
       <MainHeader className="d-flex align-items-center m-auto">
         <Col xs={0} sm={0} md={4} className="d-md-flex flex-column f-none">
-          <div style={{ width: "60px" }}>
-            <img
-              style={{ width: "100%", objectFit: "cover" }}
-              src={logoRmBG}
-              alt=""
-            />
+          <div style={{ cursor: "pointer" }} onClick={navigation.toHome}>
+            <div style={{ width: "60px" }}>
+              <img
+                style={{ width: "100%", objectFit: "cover" }}
+                src={logoRmBG}
+                alt=""
+              />
+            </div>
+            <div>Market online mini</div>
           </div>
-          <div>Market online mini</div>
         </Col>
         <Col
           xs={20}
@@ -98,7 +100,13 @@ const HeaderComponent = () => {
             </Col>
             <Col xs={3} sm={3} md={4}>
               <div className="d-md-flex d-none align-items-center justify-content-center">
-                <ButtonComponent name="Tìm kiếm" width="95%" height="32px" />
+                <ButtonComponent
+                  name="Tìm kiếm"
+                  width="95%"
+                  height="32px"
+                  padding="0px"
+                  bdRadius="2px"
+                />
               </div>
               <div
                 style={{
@@ -120,10 +128,11 @@ const HeaderComponent = () => {
           md={4}
           className="d-flex align-items-center justify-content-center gap-4"
         >
-          <IconButton>
+          <IconButtonCart>
             <CountProductInCart>99</CountProductInCart>
-            <HiOutlineShoppingCart />
-          </IconButton>
+            <HiOutlineShoppingCart onClick={navigation.toCart} />
+            <ModalCart>modal cart</ModalCart>
+          </IconButtonCart>
 
           <IconButtonUser className="d-md-none d-flex">
             <HiOutlineUser />

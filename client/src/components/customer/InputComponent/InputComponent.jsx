@@ -1,50 +1,67 @@
-import React from "react";
+import styled from "styled-components";
+
+const Container = styled.div`
+  position: relative;
+  margin: 10px 0;
+  width: 100%;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 10px 10px 10px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+
+  &:focus {
+    border-color: #000000;
+  }
+
+  &:focus + label,
+  &:not(:placeholder-shown) + label {
+    top: 0px;
+    font-size: 12px;
+    color: #000000;
+  }
+`;
+
+const Label = styled.label`
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 5px;
+  color: #aaa;
+  font-size: 16px;
+  pointer-events: none;
+  transition: 0.3s ease;
+`;
 
 const InputComponent = ({
-  type = "text",
-  placeholder = "Nhập nội dung...",
-  value,
+  autoComplete,
+  name,
+  id,
   onChange,
-  height = "35px",
-  width = "100%",
-  padding = "0 10px",
-  borderRadius = "5px",
-  border = "1px solid #ccc",
-  icon = null,
-  iconPosition = "left", // hoặc 'right'
+  styleContainer,
+  value,
+  placeholder = " ",
+  type = "text",
 }) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        height,
-        width,
-        border,
-        borderRadius,
-        padding,
-        backgroundColor: "#fff",
-      }}
-    >
-      {icon && iconPosition === "left" && (
-        <span style={{ marginRight: "5px" }}>{icon}</span>
-      )}
-      <input
-        type={type}
-        value={value}
-        onChange={onChange}
+    <Container style={styleContainer}>
+      <Input
+        id={id}
         placeholder={placeholder}
-        style={{
-          flex: 1,
-          border: "none",
-          outline: "none",
-          height: "100%",
-        }}
+        onChange={onChange}
+        value={value}
+        autoComplete={autoComplete}
+        required
+        type={type}
       />
-      {icon && iconPosition === "right" && (
-        <span style={{ marginLeft: "5px" }}>{icon}</span>
-      )}
-    </div>
+      <Label htmlFor={id}>{name}</Label>
+    </Container>
   );
 };
 

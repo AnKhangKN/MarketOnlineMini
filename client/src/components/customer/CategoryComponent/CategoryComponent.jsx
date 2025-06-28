@@ -18,29 +18,39 @@ const CategoryComponent = () => {
 
   const handleNavigateCategoryPage = ({ id, name }) => {
     const slug = toSlug(name);
-    navigate(`/category/${id}/${slug}`);
-
-    console.log(`/category/${id}/${slug}`);
+    navigate(`/category/${slug}/${id}`);
   };
 
   return (
     <>
-      <div style={{ fontWeight: "bold" }}>Danh mục</div>
-      {categories.map((category) => (
-        <ItemCategory
-          key={category.id}
-          onClick={() => handleNavigateCategoryPage(category)}
-        >
-          <div style={{ width: "50px" }}>
-            <img
-              style={{ width: "50px", objectFit: "cover" }}
-              src={category.image}
-              alt={category.name}
-            />
-          </div>
-          <TitleCategory>{category.name}</TitleCategory>
-        </ItemCategory>
-      ))}
+      <div style={{ fontWeight: "bold", fontSize: 20, marginBottom: 12 }}>
+        Danh mục
+      </div>
+      <div style={{ maxWidth: 400 }}>
+        {categories.map((category) => (
+          <ItemCategory
+            key={category.id}
+            onClick={() => handleNavigateCategoryPage(category)}
+          >
+            <div
+              style={{
+                minWidth: 50,
+                width: 50,
+                height: 50,
+                borderRadius: 8,
+                overflow: "hidden",
+              }}
+            >
+              <img
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                src={category.image}
+                alt={category.name}
+              />
+            </div>
+            <TitleCategory>{category.name}</TitleCategory>
+          </ItemCategory>
+        ))}
+      </div>
     </>
   );
 };

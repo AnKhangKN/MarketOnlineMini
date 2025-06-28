@@ -1,6 +1,7 @@
 import React from "react";
 import HeaderComponent from "../../components/customer/HeaderComponent/HeaderComponent.jsx";
 import BoxChatComponent from "../../components/customer/BoxChatComponent/BoxChatComponent.jsx";
+import { Wrapper } from "./style.js";
 
 const CustomerLayout = ({ children }) => {
   return (
@@ -8,7 +9,7 @@ const CustomerLayout = ({ children }) => {
       <header>
         <HeaderComponent />
       </header>
-      <main>{children}</main>
+      <Wrapper>{children}</Wrapper>
       <div>
         <BoxChatComponent />
       </div>

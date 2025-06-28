@@ -1,35 +1,36 @@
 import React from "react";
+import ButtonCustom from "./style";
 
 const ButtonComponent = ({
-  height = "auto",
-  width = "auto",
+  height,
+  padding,
+  width,
   name = "Button",
-  bgColor = "#d0011b",
-  color = "#fff",
-  bdRadius = "2px",
+  bgColor,
+  color,
+  bdRadius,
   onClick,
   icon = null,
-  iconPosition = "left", // hoặc "right"
-  border = "none",
+  iconPosition = "left",
+  border,
+  ...rest
 }) => {
   return (
-    <button
-      style={{
-        height,
-        width,
-        backgroundColor: bgColor,
-        border,
-        color,
-        borderRadius: bdRadius,
-        outline: "none",
-        cursor: "pointer",
-      }}
+    <ButtonCustom
+      height={height}
+      padding={padding}
+      width={width}
+      bgColor={bgColor}
+      color={color}
+      bdRadius={bdRadius}
+      border={border}
       onClick={onClick}
+      {...rest}
     >
       {icon && iconPosition === "left" && <span>{icon}</span>}
       <span>{name}</span>
       {icon && iconPosition === "right" && <span>{icon}</span>}
-    </button>
+    </ButtonCustom>
   );
 };
 

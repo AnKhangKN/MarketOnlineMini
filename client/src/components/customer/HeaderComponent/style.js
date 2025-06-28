@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Row } from "antd";
 
+// MAIN HEADER
 export const MainHeader = styled(Row)`
   max-width: 1200px;
   height: 85px;
@@ -10,9 +11,30 @@ export const MainHeader = styled(Row)`
   }
 `;
 
-export const IconButton = styled.div`
+// MODAL CART - declare first
+export const ModalCart = styled.div`
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 100%;
+  right: -85px;
+  background-color: white;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 16px;
+  min-width: 250px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  transform: translateY(-10px);
+  z-index: 100;
+`;
+
+// ICON BUTTON CART
+export const IconButtonCart = styled.div`
   font-size: 30px;
   position: relative;
+  cursor: pointer;
+
   @media screen and (max-width: 767px) {
     font-size: 25px;
     height: 30px;
@@ -21,8 +43,15 @@ export const IconButton = styled.div`
     align-items: center;
     justify-content: center;
   }
+
+  &:hover ${ModalCart} {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
 `;
 
+// COUNT ON CART
 export const CountProductInCart = styled.div`
   position: absolute;
   top: 0px;
@@ -33,12 +62,15 @@ export const CountProductInCart = styled.div`
   height: 20px;
   display: flex;
   background-color: #333;
+  color: white;
   align-items: center;
   justify-content: center;
 `;
 
+// ICON BUTTON USER
 export const IconButtonUser = styled.div`
   font-size: 30px;
+
   @media screen and (max-width: 767px) {
     font-size: 25px;
     height: 30px;
@@ -49,11 +81,13 @@ export const IconButtonUser = styled.div`
   }
 `;
 
+// SEARCH BOX
 export const ContainerSearch = styled(Row)`
   height: 40px;
   background-color: #fff;
   color: #333;
   border-radius: 2px;
+
   @media screen and (max-width: 767px) {
     height: 30px;
   }
