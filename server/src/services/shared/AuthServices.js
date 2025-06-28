@@ -24,7 +24,7 @@ const signUpUser = async (email, password) => {
         return {
             status: 'OK',
             message: 'Tạo tài khoản thành công!',
-            data: newUser,
+            newUser,
         };
     } catch (error) {
         throw error;
@@ -59,7 +59,6 @@ const signInUser = async (email, password) => {
             message: "Đăng nhập thành công",
             accessToken,
             refreshToken
-
         };
 
     } catch (error) {
