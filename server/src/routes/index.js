@@ -3,9 +3,9 @@ const AuthRoutes = require("./shared/AuthRoutes");
 
 const routes = (app) => {
   // shared router
-  app.use("/api/shared", ProductRoutes);
-
   app.use("/api/auth", AuthRoutes);
+
+  app.use("/api/shared", ProductRoutes);
 
   // customer router
 
