@@ -46,19 +46,23 @@ const HeaderComponent = () => {
           span={12}
           style={{ fontSize: "13px" }}
         >
-          <div>Kênh bán hàng</div>
-          <div>Trở thành người bán hàng</div>
-          <div>Kết nối</div>
+          <div style={{ cursor: "pointer" }}>Kênh bán hàng</div>
+          <div style={{ cursor: "pointer" }}>Trở thành người bán hàng</div>
+          <div style={{ cursor: "pointer" }}>Kết nối</div>
         </Col>
         <Col
           className="d-flex align-items-center justify-content-end gap-3"
           span={12}
           style={{ fontSize: "13px" }}
         >
-          <div>Thông báo</div>
-          <div>Hỗ trợ</div>
-          <div onClick={navigation.toSignup}>Đăng kí</div>
-          <div onClick={navigation.toLogin}>Đăng nhập</div>
+          <div style={{ cursor: "pointer" }}>Thông báo</div>
+          <div style={{ cursor: "pointer" }}>Hỗ trợ</div>
+          <div style={{ cursor: "pointer" }} onClick={navigation.toSignup}>
+            Đăng kí
+          </div>
+          <div style={{ cursor: "pointer" }} onClick={navigation.toLogin}>
+            Đăng nhập
+          </div>
         </Col>
       </Row>
 

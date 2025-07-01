@@ -4,6 +4,7 @@ import ButtonCustom from "./style";
 const ButtonComponent = ({
   height,
   padding,
+  disabled,
   width,
   name = "Button",
   bgColor,
@@ -24,6 +25,7 @@ const ButtonComponent = ({
       color={color}
       bdRadius={bdRadius}
       border={border}
+      disabled={disabled}
       onClick={onClick}
       {...rest}
     >

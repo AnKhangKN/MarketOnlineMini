@@ -8,8 +8,10 @@ const CategoryPage = () => {
   return (
     <>
       <Wrapper>
-        <h1>Category ID: {id}</h1>
-        <h2>Category Name: {name}</h2>
+        <div style={{ width: 1200, margin: "auto" }}>
+          <h1>Category ID: {id}</h1>
+          <h2>Category Name: {name}</h2>
+        </div>
       </Wrapper>
     </>
   );

@@ -1,11 +1,17 @@
 import React, { useState } from "react";
-import { Typography, Card } from "antd";
+import { Typography, Card, message } from "antd";
 import styled from "styled-components";
 import logo from "../../../assets/logo/LogoTrangChuDo-removebg-preview.png";
 import ButtonComponent from "../../../components/customer/ButtonComponent/ButtonComponent";
 import InputComponent from "../../../components/customer/InputComponent/InputComponent";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineEye, HiOutlineEyeSlash } from "react-icons/hi2";
+import google_logo from "../../../assets/logo/google_logo.png";
+import facebook_logo from "../../../assets/logo/facebook_logo.png";
+import { ButtonMethodLogin, ChangeMethodText } from "./style";
+import Password from "antd/es/input/Password";
+import { ConfigConsumer } from "antd/es/config-provider";
+import * as AuthServices from "../../../services/common/AuthServices";
 
 const { Title, Text } = Typography;
 
@@ -50,6 +56,13 @@ const FormWrapper = styled(Card)`
   border: none;
 `;
 
+const SocialLoginWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+`;
+
 const BackHome = styled.div`
   position: absolute;
   top: 20px;
@@ -69,6 +82,50 @@ const SignUpPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const [loading, setLoading] = useState(false);
+
+  const handleSignUp = async () => {
+    const { email, password, confirmPassword } = data;
+
+    if (!email || !password || !confirmPassword) {
+      message.warning("Hãy nhập đầy đủ thông tin!");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      message.warning("Email không hợp lệ!");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      message.error("Mật khẩu xác nhận không khớp!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await AuthServices.signUp(data);
+      message.success("Đăng ký thành công!");
+      navigate("/login"); // chuyển hướng sau khi đăng ký
+    } catch (error) {
+      message.error(error.response?.data?.message || "Đăng ký thất bại");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleBackHome = () => navigate("/");
 
@@ -93,8 +150,10 @@ const SignUpPage = () => {
 
             <InputComponent
               name="Email"
-              id="Email"
+              id="email"
               styleContainer={{ marginBottom: 30 }}
+              value={data.email}
+              onChange={handleChange}
             />
 
             {/* Password */}
@@ -114,9 +173,11 @@ const SignUpPage = () => {
               </div>
               <InputComponent
                 name="Mật khẩu"
-                id="Password"
+                id="password"
                 type={showPassword ? "text" : "password"}
                 styleContainer={{ marginBottom: 30 }}
+                value={data.password}
+                onChange={handleChange}
               />
             </div>
 
@@ -137,15 +198,39 @@ const SignUpPage = () => {
               </div>
               <InputComponent
                 name="Xác nhận mật khẩu"
-                id="ConfirmPassword"
+                id="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
                 styleContainer={{ marginBottom: 24 }}
+                value={data.confirmPassword}
+                onChange={handleChange}
               />
             </div>
 
-            <ButtonComponent name="Đăng ký" />
+            <ButtonComponent
+              name="Đăng ký"
+              disabled={loading}
+              onClick={handleSignUp}
+            />
 
-            <Text type="secondary" style={{ display: "block", marginTop: 20 }}>
+            <ChangeMethodText>Hoặc</ChangeMethodText>
+
+            <SocialLoginWrapper>
+              <ButtonMethodLogin title="Đăng nhập Facebook">
+                <img
+                  className="w-100 h-100"
+                  src={facebook_logo}
+                  alt="Facebook"
+                />
+              </ButtonMethodLogin>
+              <ButtonMethodLogin title="Đăng nhập Google">
+                <img className="w-100 h-100" src={google_logo} alt="Google" />
+              </ButtonMethodLogin>
+            </SocialLoginWrapper>
+
+            <Text
+              type="secondary"
+              style={{ display: "block", marginTop: 24, textAlign: "center" }}
+            >
               Đã có tài khoản? <a href="/login">Đăng nhập</a>
             </Text>
           </FormWrapper>
