@@ -1,17 +1,19 @@
-const getDetailUser = (res, req) => {
+const UserServices = require("../../services/shared/UserServices");
+
+const getDetailUser = async (req, res) => {
     try {
+        const userId = req?.user?._id;
 
-        const user = req.user;
+        const result = await UserServices.getDetailUser(userId);
 
-        const result = UserServices.getDetailUser
-
+        return res.status(200).json(result);
     } catch (error) {
         return res.status(500).json({
             message: error.message || "Internal server error",
-        })
+        });
     }
-}
+};
 
 module.exports = {
-    getDetailUser
-}
+    getDetailUser,
+};

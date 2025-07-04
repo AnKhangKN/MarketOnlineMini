@@ -15,15 +15,13 @@ const signUpUser = (email, password) => {
             const newUser = await User.create({ email, password: hashedPassword });
 
             resolve({
-                status: "OK",
                 message: "Tạo tài khoản thành công!",
                 newUser,
             });
         } catch (error) {
-            if (error.code === 11000 && error.keyPattern?.email) {
-                return reject("Email đã tồn tại (MongoDB)");
-            }
-            reject(error.message || "Lỗi hệ thống");
+            return reject({
+                message: error.message,
+            });
         }
     });
 };
@@ -47,16 +45,16 @@ const signInUser = (email, password) => {
             }
 
             const payload = {
-                id: user._id,
+                _id: user._id,
                 isAdmin: user.isAdmin,
-                isVendor: user.isVendor,
+                isSeller: user.isSeller,
             };
 
             const accessToken = await generateAccessToken(payload);
             const refreshToken = await generateRefreshToken(payload);
 
             return resolve({
-                message: "Đăng nhập thành công",
+                message: "Đăng nhập thành công!",
                 accessToken,
                 refreshToken,
             });
@@ -68,7 +66,6 @@ const signInUser = (email, password) => {
         }
     });
 };
-
 
 module.exports = {
     signUpUser,

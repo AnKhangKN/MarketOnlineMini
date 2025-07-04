@@ -30,6 +30,7 @@ const wishShopsSchema = new mongoose.Schema({
 // Người dùng
 const userSchema = new mongoose.Schema({
     fullName: { type: String, default: "" },
+
     avatar: { type: String },
 
     email: { type: String, required: true, unique: true, index: true },
@@ -45,7 +46,7 @@ const userSchema = new mongoose.Schema({
     wallet: { type: Number, default: 0, min: 0 },
 
     isAdmin: { type: Boolean, default: false },
-    isVendor: { type: Boolean, default: false },
+    isSeller: { type: Boolean, default: false },
 
     accessToken: { type: String },
     refreshToken: { type: String },
@@ -57,9 +58,6 @@ const userSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
-
-userSchema.index({ isVendor: 1 });
-userSchema.index({ isAdmin: 1 });
 
 
 const User = mongoose.model('User', userSchema);
