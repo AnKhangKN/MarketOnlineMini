@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Card, message } from "antd";
-import styled from "styled-components";
+import { Typography, message } from "antd";
 import logo from "../../../assets/logo/LogoTrangChuDo-removebg-preview.png";
 import ButtonComponent from "../../../components/customer/ButtonComponent/ButtonComponent";
 import InputComponent from "../../../components/customer/InputComponent/InputComponent";
@@ -9,86 +8,29 @@ import { HiOutlineEye, HiOutlineEyeSlash } from "react-icons/hi2";
 import google_logo from "../../../assets/logo/google_logo.png";
 import facebook_logo from "../../../assets/logo/facebook_logo.png";
 import * as AuthServices from "../../../services/common/AuthServices";
-import { ButtonMethodLogin, ChangeMethodText } from "./style";
+import * as UserServices from "../../../services/common/UserServices";
+import {
+  ButtonMethodLogin,
+  ChangeMethodText,
+  PageWrapper,
+  ContentWrapper,
+  LeftSection,
+  Logo,
+  Slogan,
+  FormWrapper,
+  BackHome,
+  SocialLoginWrapper,
+  EyeIcon,
+} from "./style";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../../store/slices/userSlice";
 
 const { Title, Text } = Typography;
 
-const PageWrapper = styled.div`
-  background: linear-gradient(to bottom, #fff, #ffe6e8);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 24px;
-`;
-
-const ContentWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 80px;
-  align-items: center;
-  justify-content: center;
-  max-width: 1200px;
-  width: 100%;
-`;
-
-const LeftSection = styled.div`
-  text-align: center;
-  max-width: 400px;
-`;
-
-const Logo = styled.img`
-  width: 100px;
-  margin-bottom: 16px;
-`;
-
-const Slogan = styled.h2`
-  color: #d0011b;
-  font-weight: bold;
-  font-size: 24px;
-`;
-
-const FormWrapper = styled(Card)`
-  width: 100%;
-  max-width: 400px;
-  padding: 32px;
-  border-radius: 16px;
-  box-shadow: 0 10px 20px rgba(208, 1, 27, 0.15);
-  border: none;
-`;
-
-const BackHome = styled.div`
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  color: #d0011b;
-  font-weight: 500;
-  cursor: pointer;
-  font-size: 16px;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const SocialLoginWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 24px;
-`;
-
-const EyeIcon = styled.div`
-  position: absolute;
-  top: 8px;
-  right: 14px;
-  z-index: 1;
-  font-size: 22px;
-  cursor: pointer;
-  color: #d0011b;
-`;
-
 const LoginPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -102,6 +44,10 @@ const LoginPage = () => {
     setData((prev) => ({ ...prev, [id]: value }));
   };
 
+  const handleBackHome = () => {
+    navigate("/");
+  };
+
   const handleLogin = async () => {
     const { email, password } = data;
 
@@ -112,10 +58,23 @@ const LoginPage = () => {
 
     try {
       setLoading(true);
-      await AuthServices.signIn(data); // hàm đăng nhập (gọi API)
 
-      message.success("Đăng nhập thành công!");
-      navigate("/"); // điều hướng sau khi login
+      const res = await AuthServices.signIn({ email, password });
+      const { accessToken, message: successMsg } = res;
+
+      localStorage.setItem("access_token", accessToken);
+
+      const userData = await handleGetDetailUser(accessToken);
+
+      if (userData?.isAdmin) {
+        navigate("/admin/dashboard");
+      } else if (userData?.isSeller) {
+        navigate("/seller/dashboard");
+      } else {
+        navigate("/");
+      }
+
+      message.success(successMsg || "Đăng nhập thành công!");
     } catch (error) {
       message.error(error?.response?.data?.message || "Đăng nhập thất bại!");
     } finally {
@@ -123,18 +82,18 @@ const LoginPage = () => {
     }
   };
 
-  // const handleGetDetailUser = async(id, access_token, isAdmin, isVendor) => {
-  //   try {
+  const handleGetDetailUser = async (accessToken) => {
+    try {
+      const res = await UserServices.getDetailUser(accessToken);
+      dispatch(updateUser(res.data));
 
-  //     const res = await
-
-  //   } catch (error) {
-  //     message.error(error?.response?.data?.message);
-  //   }
-  // }
-
-  const handleBackHome = () => {
-    navigate("/");
+      return res?.data;
+    } catch (error) {
+      message.error(
+        error?.response?.data?.message || "Lỗi khi lấy thông tin người dùng"
+      );
+      return null;
+    }
   };
 
   return (
@@ -203,7 +162,13 @@ const LoginPage = () => {
               type="secondary"
               style={{ display: "block", marginTop: 24, textAlign: "center" }}
             >
-              Chưa có tài khoản? <a href="/signup">Đăng ký ngay</a>
+              Chưa có tài khoản?{" "}
+              <span
+                onClick={() => navigate("/signup")}
+                style={{ color: "#d0011b", cursor: "pointer" }}
+              >
+                Đăng ký ngay
+              </span>
             </Text>
           </FormWrapper>
         </ContentWrapper>

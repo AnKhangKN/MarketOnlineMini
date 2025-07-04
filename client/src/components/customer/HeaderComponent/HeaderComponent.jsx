@@ -14,9 +14,11 @@ import { FiSearch } from "react-icons/fi";
 import logoDo from "../../../assets/logo/LogoMarketOnlineMiniDo.png";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const HeaderComponent = () => {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
 
   const navigation = {
     toLogin: () => navigate("/login"),
@@ -57,12 +59,19 @@ const HeaderComponent = () => {
         >
           <div style={{ cursor: "pointer" }}>Thông báo</div>
           <div style={{ cursor: "pointer" }}>Hỗ trợ</div>
-          <div style={{ cursor: "pointer" }} onClick={navigation.toSignup}>
-            Đăng kí
-          </div>
-          <div style={{ cursor: "pointer" }} onClick={navigation.toLogin}>
-            Đăng nhập
-          </div>
+
+          {user?.id ? (
+            <div>{user.fullName || user.email}</div>
+          ) : (
+            <>
+              <div style={{ cursor: "pointer" }} onClick={navigation.toSignup}>
+                Đăng kí
+              </div>
+              <div style={{ cursor: "pointer" }} onClick={navigation.toLogin}>
+                Đăng nhập
+              </div>
+            </>
+          )}
         </Col>
       </Row>
 

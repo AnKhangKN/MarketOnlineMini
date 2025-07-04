@@ -1,29 +1,34 @@
+// src/services/common/AuthServices.js
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_BACKEND_API;
+export const axiosJWT = axios.create();
+
 export const signUp = async (data) => {
-  try {
-    const res = await axios.post(
-      `${import.meta.env.VITE_BACKEND_API}/auth/register`,
-      data
-    );
-    return res.data;
-  } catch (error) {
-    console.error("Lỗi đăng ký:", error);
-    throw error;
-  }
+  const res = await axios.post(`${BASE_URL}/auth/register`, data);
+  return res.data;
 };
 
 export const signIn = async (data) => {
-  console.log(data);
   try {
-    const res = await axios.post(
-      `${import.meta.env.VITE_BACKEND_API}/auth/login`,
-      data
-    );
-
+    const res = await axios.post(`${BASE_URL}/auth/login`, data, {
+      withCredentials: true,
+    });
     return res.data;
   } catch (error) {
-    console.error("Lỗi đăng ký:", error);
-    throw error;
+    console.log(error);
+  }
+};
+
+export const refreshToken = async () => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}/auth/token/refresh`,
+      {},
+      { withCredentials: true }
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
   }
 };

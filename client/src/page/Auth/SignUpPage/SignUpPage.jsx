@@ -117,9 +117,11 @@ const SignUpPage = () => {
 
     try {
       setLoading(true);
-      await AuthServices.signUp(data);
-      message.success("Đăng ký thành công!");
-      navigate("/login"); // chuyển hướng sau khi đăng ký
+
+      const res = await AuthServices.signUp(data);
+
+      message.success(res?.message || "Tạo tài khoản thành công!");
+      navigate("/login");
     } catch (error) {
       message.error(error.response?.data?.message || "Đăng ký thất bại");
     } finally {
