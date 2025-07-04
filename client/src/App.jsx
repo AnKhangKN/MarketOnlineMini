@@ -7,6 +7,8 @@ import * as TokenUtils from "./utils/token.utils.js";
 import * as UserServices from "./services/common/UserServices.js";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "./store/slices/userSlice.js";
+import NotFoundPage from "./page/NotFoundPage/NotFoundPage.jsx";
+import AdminLayout from "./layout/AdminLayout/AdminLayout.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,36 +32,50 @@ function App() {
     }
   );
 
-  const fetchGetDetailUser = async () => {
-    try {
-      const res = await UserServices.getDetailUser();
-
-      dispatch(updateUser(res.data));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
+    const fetchGetDetailUser = async () => {
+      const token = await TokenUtils.getValidAccessToken();
+      if (!token) return;
+
+      try {
+        const res = await UserServices.getDetailUser();
+        dispatch(updateUser(res.data));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchGetDetailUser();
-  }, []);
+  }, [dispatch]);
 
   return (
     <Routes>
       {routes.map((route, index) => {
         const Page = route.page;
-        const Layout = route.isShowHeaderCustomer
-          ? CustomerLayout
-          : React.Fragment;
+
+        let Layout = React.Fragment;
+
+        if (route.isAdminLayout) {
+          Layout = AdminLayout;
+        } else if (route.isShowHeaderCustomer) {
+          Layout = CustomerLayout;
+        }
+
+        const checkAuth =
+          !route.isAdminLayout || (route.isAdminLayout && user.isAdmin);
 
         return (
           <Route
             key={index}
             path={route.path}
             element={
-              <Layout>
-                <Page />
-              </Layout>
+              checkAuth ? (
+                <Layout>
+                  <Page />
+                </Layout>
+              ) : (
+                <NotFoundPage />
+              )
             }
           />
         );

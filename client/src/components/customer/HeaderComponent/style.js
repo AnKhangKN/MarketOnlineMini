@@ -92,3 +92,50 @@ export const ContainerSearch = styled(Row)`
     height: 30px;
   }
 `;
+
+// Dropdown content
+export const ModalInformation = styled.div`
+  position: absolute;
+  top: 35px;
+  right: 0;
+  background-color: #fff;
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.25s ease-in-out;
+  min-width: 180px;
+  padding: 10px 0;
+  z-index: 999;
+`;
+
+// Wrapper
+export const ContainerInformation = styled.div`
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &:hover ${ModalInformation} {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+`;
+
+// Each item
+export const ItemInformation = styled.div`
+  padding: 0px 9px;
+  margin: 5px 9px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #ccc;
+  }
+`;

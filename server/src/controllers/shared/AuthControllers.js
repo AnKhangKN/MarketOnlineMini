@@ -79,8 +79,30 @@ const handleRefreshToken = async (req, res) => {
     }
 }
 
+const logoutUser = async (req, res) => {
+    try {
+        res.clearCookie("refresh_token", {
+            httpOnly: true,
+            secure: false, // nên để true nếu dùng HTTPS
+            sameSite: "strict",
+            path: "/",
+        });
+
+        return res.status(200).json({
+            status: "OK",
+            message: "Đăng xuất thành công!",
+        });
+    } catch (error) {
+        return res.status(500).json({
+            status: "ERROR",
+            message: error.message || "Internal Server Error",
+        });
+    }
+};
+
 module.exports = {
     signUpUser,
     signInUser,
-    handleRefreshToken
+    handleRefreshToken,
+    logoutUser
 };

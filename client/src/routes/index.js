@@ -4,6 +4,7 @@ import CategoryPage from "../page/customer/CategoryPage/CategoryPage.jsx";
 import CartPage from "../page/customer/CartPage/CartPage.jsx";
 import HomePage from "../page/customer/HomePage/HomePage.jsx";
 import NotFoundPage from "../page/NotFoundPage/NotFoundPage.jsx";
+import Dashboard from "../page/admin/Dashboard/Dashboard.jsx";
 
 export const routes = [
   // authentication
@@ -36,6 +37,11 @@ export const routes = [
   // seller
 
   // admin
+  {
+    path: "/admin/dashboard",
+    page: Dashboard,
+    isAdminLayout: true,
+  },
 
   // not found page
   {

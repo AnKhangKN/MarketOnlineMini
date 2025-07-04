@@ -1,4 +1,4 @@
-import { Col, Modal, Row } from "antd";
+import { Col, message, Modal, Row } from "antd";
 import React from "react";
 import {
   ContainerSearch,
@@ -7,6 +7,9 @@ import {
   IconButtonUser,
   ModalCart,
   MainHeader,
+  ContainerInformation,
+  ModalInformation,
+  ItemInformation,
 } from "./style";
 import logoRmBG from "../../../assets/logo/LogoMarketOnlineMini-removebg-preview.png";
 import { HiOutlineShoppingCart, HiOutlineUser } from "react-icons/hi2";
@@ -14,10 +17,14 @@ import { FiSearch } from "react-icons/fi";
 import logoDo from "../../../assets/logo/LogoMarketOnlineMiniDo.png";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import * as AuthServices from "../../../services/common/AuthServices";
+import * as Token from "../../../utils/token.utils";
+import { resetUser } from "../../../store/slices/userSlice";
 
 const HeaderComponent = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
   const navigation = {
@@ -25,6 +32,24 @@ const HeaderComponent = () => {
     toSignup: () => navigate("/signup"),
     toHome: () => navigate("/"),
     toCart: () => navigate("/cart"),
+    toAdminDashboard: () => navigate("/admin/dashboard"),
+    toSellerDashboard: () => navigate("/seller/dashboard"),
+    toProfile: () => navigate("/profile"),
+  };
+
+  const handleLogout = async () => {
+    try {
+      const token = await Token.getValidAccessToken();
+
+      await AuthServices.logoutUser(token);
+      localStorage.removeItem("access_token"); // Chỉ xóa access_token có trong localStorage
+
+      dispatch(resetUser());
+      navigate("/");
+      message.success("Đăng xuất thành công!");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -60,17 +85,40 @@ const HeaderComponent = () => {
           <div style={{ cursor: "pointer" }}>Thông báo</div>
           <div style={{ cursor: "pointer" }}>Hỗ trợ</div>
 
-          {user?.id ? (
-            <div>{user.fullName || user.email}</div>
-          ) : (
+          {!user?.id ? (
+            // Chưa đăng nhập
             <>
               <div style={{ cursor: "pointer" }} onClick={navigation.toSignup}>
-                Đăng kí
+                Đăng ký
               </div>
               <div style={{ cursor: "pointer" }} onClick={navigation.toLogin}>
                 Đăng nhập
               </div>
             </>
+          ) : (
+            // Đã đăng nhập
+            <ContainerInformation>
+              <div>{user.fullName}</div>
+              {user.isAdmin ? (
+                <ModalInformation onClick={navigation.toAdminDashboard}>
+                  Quay về Admin
+                </ModalInformation>
+              ) : user.isSeller ? (
+                <ModalInformation onClick={navigation.toSellerDashboard}>
+                  Quản lý Shop
+                </ModalInformation>
+              ) : (
+                <ModalInformation>
+                  <ItemInformation onClick={navigation.toProfile}>
+                    Thông tin cá nhân
+                  </ItemInformation>
+                  <ItemInformation>Đơn hàng</ItemInformation>
+                  <ItemInformation onClick={handleLogout}>
+                    Đăng xuất
+                  </ItemInformation>
+                </ModalInformation>
+              )}
+            </ContainerInformation>
           )}
         </Col>
       </Row>

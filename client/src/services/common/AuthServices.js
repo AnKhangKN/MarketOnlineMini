@@ -32,3 +32,18 @@ export const refreshToken = async () => {
     console.log(error);
   }
 };
+
+export const logoutUser = async (accessToken) => {
+  try {
+    const res = await axios.delete(`${BASE_URL}/auth/logout`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

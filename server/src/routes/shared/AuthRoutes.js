@@ -8,4 +8,6 @@ route.post('/login', AuthControllers.signInUser);     // đăng nhập
 
 route.post('/token/refresh', AuthControllers.handleRefreshToken);
 
+route.delete('/logout', AuthControllers.logoutUser)
+
 module.exports = route;
