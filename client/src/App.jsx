@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "./store/slices/userSlice.js";
 import NotFoundPage from "./page/NotFoundPage/NotFoundPage.jsx";
 import AdminLayout from "./layout/AdminLayout/AdminLayout.jsx";
+import SellerLayout from "./layout/SellerLayout/SellerLayout.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +46,17 @@ function App() {
       }
     };
 
+    // const fetchGetAllCart = async () => {
+    //   const token = await TokenUtils.getValidAccessToken();
+    //   if (!token) return;
+
+    //   try {
+
+    //   } catch (error) {
+
+    //   }
+    // }
+
     fetchGetDetailUser();
   }, [dispatch]);
 
@@ -59,10 +71,13 @@ function App() {
           Layout = AdminLayout;
         } else if (route.isShowHeaderCustomer) {
           Layout = CustomerLayout;
+        } else if (route.isSellerLayout) {
+          Layout = SellerLayout;
         }
 
         const checkAuth =
-          !route.isAdminLayout || (route.isAdminLayout && user.isAdmin);
+          (!route.isAdminLayout || (route.isAdminLayout && user.isAdmin)) &&
+          (!route.isSellerLayout || (route.isSellerLayout && user.isSeller));
 
         return (
           <Route

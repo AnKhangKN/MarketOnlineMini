@@ -100,12 +100,24 @@ const HeaderComponent = () => {
             <ContainerInformation>
               <div>{user.fullName}</div>
               {user.isAdmin ? (
-                <ModalInformation onClick={navigation.toAdminDashboard}>
-                  Quay về Admin
+                <ModalInformation>
+                  <ItemInformation
+                    onClick={() => {
+                      navigate("/admin/dashboard");
+                    }}
+                  >
+                    Quay lại Admin
+                  </ItemInformation>
+                  <ItemInformation onClick={handleLogout}>
+                    Đăng xuất
+                  </ItemInformation>
                 </ModalInformation>
               ) : user.isSeller ? (
-                <ModalInformation onClick={navigation.toSellerDashboard}>
-                  Quản lý Shop
+                <ModalInformation>
+                  <ItemInformation>Quay lại Shop</ItemInformation>
+                  <ItemInformation onClick={handleLogout}>
+                    Đăng xuất
+                  </ItemInformation>
                 </ModalInformation>
               ) : (
                 <ModalInformation>

@@ -10,9 +10,8 @@ const CustomerLayout = ({ children }) => {
         <HeaderComponent />
       </header>
       <Wrapper>{children}</Wrapper>
-      <div>
-        <BoxChatComponent />
-      </div>
+
+      <BoxChatComponent />
     </>
   );
 };

@@ -4,7 +4,8 @@ import CategoryPage from "../page/customer/CategoryPage/CategoryPage.jsx";
 import CartPage from "../page/customer/CartPage/CartPage.jsx";
 import HomePage from "../page/customer/HomePage/HomePage.jsx";
 import NotFoundPage from "../page/NotFoundPage/NotFoundPage.jsx";
-import Dashboard from "../page/admin/Dashboard/Dashboard.jsx";
+import DashboardSeller from "../page/seller/Dashboard/Dashboard.jsx";
+import DashboardAdmin from "../page/admin/Dashboard/Dashboard.jsx";
 
 export const routes = [
   // authentication
@@ -35,11 +36,16 @@ export const routes = [
   },
 
   // seller
+  {
+    path: "seller/dashboard",
+    page: DashboardSeller,
+    isSellerLayout: true,
+  },
 
   // admin
   {
     path: "/admin/dashboard",
-    page: Dashboard,
+    page: DashboardAdmin,
     isAdminLayout: true,
   },
 

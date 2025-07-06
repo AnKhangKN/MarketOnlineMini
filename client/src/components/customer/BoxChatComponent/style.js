@@ -31,7 +31,7 @@ export const ModalComponentOpen = styled.div`
   opacity: 0;
   transform: translateY(20px);
   position: fixed;
-  bottom: 0px;
+  bottom: 30px;
   right: 20px;
   z-index: 11;
 

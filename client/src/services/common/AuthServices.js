@@ -1,12 +1,15 @@
-// src/services/common/AuthServices.js
 import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API;
 export const axiosJWT = axios.create();
 
 export const signUp = async (data) => {
-  const res = await axios.post(`${BASE_URL}/auth/register`, data);
-  return res.data;
+  try {
+    const res = await axios.post(`${BASE_URL}/auth/register`, data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const signIn = async (data) => {

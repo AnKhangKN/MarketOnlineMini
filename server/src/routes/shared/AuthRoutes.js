@@ -6,8 +6,8 @@ route.post('/register', AuthControllers.signUpUser);  // đăng ký
 
 route.post('/login', AuthControllers.signInUser);     // đăng nhập
 
-route.post('/token/refresh', AuthControllers.handleRefreshToken);
+route.post('/token/refresh', AuthControllers.handleRefreshToken);  // refresh token
 
-route.delete('/logout', AuthControllers.logoutUser)
+route.delete('/logout', AuthControllers.logoutUser); // đăng xuất
 
 module.exports = route;

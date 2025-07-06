@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import SidebarComponent from "../../components/admin/SidebarComponent/SidebarComponent";
-import HeaderComponent from "../../components/admin/HeaderComponent/HeaderComponent";
+import SidebarComponent from "../../components/seller/SidebarComponent/SidebarComponent";
+import HeaderComponent from "../../components/seller/HeaderComponent/HeaderComponent";
 
-const AdminLayout = ({ children }) => {
+const SellerLayout = ({ children }) => {
   const [isShowSidebar, setIsShowSidebar] = useState(false);
 
   return (
@@ -21,4 +21,4 @@ const AdminLayout = ({ children }) => {
   );
 };
 
-export default AdminLayout;
+export default SellerLayout;

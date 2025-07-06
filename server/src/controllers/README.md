@@ -1,0 +1,4 @@
+- Controller giao tiếp với " http " nhập req, gửi res đến services.
+- Quản lý khi nào nên gọi services gọi services gì.
+- Có thể kết hợp gọi nhiều services (chưa thử).
+- Tách " http " và " business ".
