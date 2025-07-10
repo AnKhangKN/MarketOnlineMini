@@ -6,6 +6,8 @@ import HomePage from "../page/customer/HomePage/HomePage.jsx";
 import NotFoundPage from "../page/NotFoundPage/NotFoundPage.jsx";
 import DashboardSeller from "../page/seller/Dashboard/Dashboard.jsx";
 import DashboardAdmin from "../page/admin/Dashboard/Dashboard.jsx";
+import ProductManagementSeller from "../page/seller/ProductManagement/ProductManagement.jsx";
+import SignUpShopPage from "../page/Auth/SignUpShopPage/SignUpShopPage.jsx";
 
 export const routes = [
   // authentication
@@ -16,6 +18,11 @@ export const routes = [
   {
     path: "/signup",
     page: SignUpPage,
+  },
+
+  {
+    path: "/register-seller",
+    page: SignUpShopPage,
   },
 
   // customer
@@ -39,6 +46,11 @@ export const routes = [
   {
     path: "seller/dashboard",
     page: DashboardSeller,
+    isSellerLayout: true,
+  },
+  {
+    path: "seller/products",
+    page: ProductManagementSeller,
     isSellerLayout: true,
   },
 

@@ -1,6 +1,8 @@
 const ProductRoutes = require("./shared/ProductRoutes");
 const AuthRoutes = require("./shared/AuthRoutes");
 const UserRoutes = require("./shared/UserRoutes");
+const ShopRoutesSeller = require("./seller/ShopRoutes");
+const {verifyToken} = require("../middlewares/authMiddleware");
 
 const routes = (app) => {
   // shared router
@@ -14,7 +16,9 @@ const routes = (app) => {
 
   // admin router
 
-  // vendor router
+  // seller router
+
+  app.use('/api/seller', ShopRoutesSeller);
 };
 
 module.exports = routes;

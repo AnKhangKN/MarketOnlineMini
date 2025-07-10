@@ -14,7 +14,7 @@ const SellerLayout = ({ children }) => {
           toggleSidebar={() => setIsShowSidebar((prev) => !prev)}
         />
 
-        <div>{children}</div>
+        <div style={{ margin: "24px" }}>{children}</div>
         {/* <div>footer component</div> */}
       </div>
     </div>

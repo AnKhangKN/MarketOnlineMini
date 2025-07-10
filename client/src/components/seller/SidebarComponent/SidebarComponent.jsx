@@ -31,7 +31,7 @@ const SidebarComponent = ({ isShowSidebar }) => {
       <div style={{ height: "100vh" }}>
         <div
           className="d-flex align-items-center p-2 cursor-pointer"
-          onClick={() => navigate("/admin/dashboard")}
+          onClick={() => navigate("/seller/dashboard")}
         >
           <div
             style={{ width: "50px" }}
@@ -48,7 +48,7 @@ const SidebarComponent = ({ isShowSidebar }) => {
 
         <div
           className="d-flex align-items-center p-2 cursor-pointer"
-          onClick={() => navigate("/admin/dashboard")}
+          onClick={() => navigate("/seller/dashboard")}
         >
           <div
             style={{ width: "50px" }}
@@ -61,7 +61,7 @@ const SidebarComponent = ({ isShowSidebar }) => {
 
         <div
           className="d-flex align-items-center p-2 cursor-pointer"
-          onClick={() => navigate("/admin/user")}
+          onClick={() => navigate("/seller/user")}
         >
           <div
             style={{ width: "50px" }}
@@ -74,7 +74,7 @@ const SidebarComponent = ({ isShowSidebar }) => {
 
         <div
           className="d-flex align-items-center p-2 cursor-pointer"
-          onClick={() => navigate("/admin/product")}
+          onClick={() => navigate("/seller/products")}
         >
           <div
             style={{ width: "50px" }}

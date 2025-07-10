@@ -37,6 +37,30 @@ const HeaderComponent = () => {
     toProfile: () => navigate("/profile"),
   };
 
+  const handleNavigateRegisterSeller = () => {
+    if (user?.id && !user?.isSeller) {
+      navigate("/register-seller");
+    } else if (user?.id && user?.isSeller) {
+      message.info("Bạn đã là người bán.");
+      navigate("/seller/dashboard");
+    } else {
+      message.warning("Vui lòng đăng nhập để tiếp tục.");
+      navigate("/login");
+    }
+  };
+
+  const handleNavigateSeller = () => {
+    if (user?.id && user?.isSeller) {
+      navigate("/seller/dashboard");
+    } else if (user?.id && !user?.isSeller) {
+      message.warning("Bạn hãy đăng ký shop để bán hàng!");
+      navigate("/register-seller");
+    } else {
+      message.warning("Vui lòng đăng nhập để tiếp tục.");
+      navigate("/login");
+    }
+  };
+
   const handleLogout = async () => {
     try {
       const token = await Token.getValidAccessToken();
@@ -73,8 +97,15 @@ const HeaderComponent = () => {
           span={12}
           style={{ fontSize: "13px" }}
         >
-          <div style={{ cursor: "pointer" }}>Kênh bán hàng</div>
-          <div style={{ cursor: "pointer" }}>Trở thành người bán hàng</div>
+          <div onClick={handleNavigateSeller} style={{ cursor: "pointer" }}>
+            Kênh bán hàng
+          </div>
+          <div
+            onClick={handleNavigateRegisterSeller}
+            style={{ cursor: "pointer" }}
+          >
+            Trở thành người bán hàng
+          </div>
           <div style={{ cursor: "pointer" }}>Kết nối</div>
         </Col>
         <Col
@@ -114,7 +145,11 @@ const HeaderComponent = () => {
                 </ModalInformation>
               ) : user.isSeller ? (
                 <ModalInformation>
-                  <ItemInformation>Quay lại Shop</ItemInformation>
+                  <ItemInformation
+                    onClick={() => navigate("/seller/dashboard")}
+                  >
+                    Quay lại Shop
+                  </ItemInformation>
                   <ItemInformation onClick={handleLogout}>
                     Đăng xuất
                   </ItemInformation>
