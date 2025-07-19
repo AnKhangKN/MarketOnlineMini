@@ -4,6 +4,7 @@ const routes = require("./routes")
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
+const errorHandler = require("./middlewares/errorHandler");
 
 dotenv.config();
 
@@ -20,5 +21,7 @@ app.use(cookieParser())
 app.use(express.urlencoded({ extended: true })); // Đọc dữ liệu form
 
 routes(app);
+
+app.use(errorHandler);
 
 module.exports = app;

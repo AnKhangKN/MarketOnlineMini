@@ -50,3 +50,9 @@ Banner model
 - Banner sản phẩm sẽ hiện theo từng chương trình (sẽ có 1 chương trình mặc đinh).
 - Trong 1 chương trình sẽ có hình ảnh của chương trình hiển thị trên banner.
 - Khi chương trình kết thúc sẽ trở về chương trình mặc định của sản.
+
+Notification model
+- Dùng để thông báo cho (admin, user, seller).
+- Thông báo cho user (đơn hàng (các thông báo nhỏ), chương trình sale toàn sàn vd: tuần lễ thời trang,... , đơn hàng đã tới, đơn hàng đc hoàn trả thành công hay chưa, đã nhận lại tiền hay chưa, thông báo đăng kí shop nếu có, thông báo các báo cáo đã được xử lý hay chưa, các tin nhắn mới).
+- Thông báo cho seller (Có đơn hàng mới, Đơn hàng bị hủy, Sản phẩm bị từ chối, Tin nhắn mới từ khách, Thanh toán đã hoàn thành).
+- Thông báo cho admin (Có shop mới đăng ký, Có sản phẩm mới cần duyệt, Có báo cáo vi phạm (shop, sản phẩm), Có tin nhắn support mới, Hệ thống lỗi (monitoring)).

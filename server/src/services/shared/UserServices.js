@@ -1,28 +1,17 @@
 const User = require('../../models/User');
+const throwError = require("../../utils/throwError");
 
-const getDetailUser = (userId) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const user = await User.findById(userId).select("-password"); // ẩn mật khẩu
+class UserServices {
+    async getDetailUser(userId) {
+        const user = await User.findById(userId).select("-password"); // ẩn mật khẩu
 
-            if (!user) {
-                return reject({
-                    message: "Người dùng không tồn tại!",
-                });
-            }
+        if (!user) throwError("Người dùng không tồn tại", 401);
 
-            resolve({
-                message: "Lấy thông tin người dùng thành công!",
-                data: user,
-            });
-        } catch (error) {
-            return reject({
-                message: error.message || "Đã xảy ra lỗi khi lấy thông tin người dùng",
-            });
-        }
-    });
-};
+        return {
+            message: "Lấy thông tin người dùng thành công!",
+            data: user,
+        };
+    }
+}
 
-module.exports = {
-    getDetailUser,
-};
+module.exports = new UserServices();

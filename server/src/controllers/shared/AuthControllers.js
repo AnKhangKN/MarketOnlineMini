@@ -1,89 +1,64 @@
 const AuthServices = require("../../services/shared/AuthServices");
-const jwtServices = require("../../utils/jwt")
+const jwtServices = require("../../utils/jwt");
+const throwError = require("../../utils/throwError");
 
-const signUpUser = async (req, res) => {
+const registerUser = async (req, res, next) => {
     try {
-        const {email, password, confirmPassword} = req.body;
+        const { email, password } = req.body;
 
-        if (!email || !password || !confirmPassword) {
-            return res.status(400).send({
-                error: "Thiếu thông tin!",
-            })
-        }
-
-        if (password !== confirmPassword) {
-            return res.status(400).json({
-                error: "Mật khẩu không khớp!",
-            });
-        }
-
-        const emailRegex = /^\S+@\S+\.\S+$/;
-        if (!emailRegex.test(email)) {
-            return res.status(400).json({
-                error: "Email không hợp lệ!"
-            });
-        }
-
-        const result = await AuthServices.signUpUser(email, password);
+        const result = await AuthServices.register(email, password);
         return res.status(200).json(result);
-
     } catch (error) {
-        return res.status(500).json({
-            message: error.message || "Internal Server Error",
-        });
+        next(error);
     }
 };
 
-const signInUser = async (req, res) => {
+const loginUser = async (req, res, next) => {
     try {
-        const {email, password} = req.body;
+        const { email, password, platform } = req.body;
 
-        const result = await AuthServices.signInUser(email, password);
-
+        const result = await AuthServices.login(email, password);
         const { refreshToken, ...newResult } = result;
 
-        res.cookie("refresh_token", refreshToken, {
-            httpOnly: true,
-            secure: false,
-            sameSite: "strict",
-            maxAge: 365 * 24 * 60 * 60 * 1000,
-            path: "/"
-        });
+        if (platform === "web") {
+            res.cookie("refresh_token", refreshToken, {
+                httpOnly: true,
+                secure: false, // Đổi thành true khi deploy với HTTPS
+                sameSite: "strict",
+                maxAge: 365 * 24 * 60 * 60 * 1000,
+                path: "/"
+            });
 
-        return res.status(200).json(newResult);
-
+            return res.status(200).json(newResult); // Gửi access_token và user
+        } else {
+            return res.status(200).json({
+                ...newResult,
+                refreshToken // Cho mobile lưu
+            });
+        }
     } catch (error) {
-        return res.status(500).json({
-            error: error.message || "Internal Server Error",
-        })
+        next(error);
     }
 };
 
-const handleRefreshToken = async (req, res) => {
+const handleRefreshToken = async (req, res, next) => {
     try {
         const token = req.cookies.refresh_token;
 
-        if (!token) {
-            return res.status(401).json({
-                message: "Người dùng chưa đang nhập!"
-            })
-        }
+        if (!token) throwError ("Người dùng chưa đăng nhập!", 401);
 
         const result = await jwtServices.handleRefreshToken(token);
         return res.status(200).json(result);
-
     } catch (error) {
-        return res.status(500).json({
-            error: error.message || "Internal Server Error",
-        })
+        next(error);
     }
-}
+};
 
-const logoutUser = async (req, res) => {
+const logoutUser = async (req, res, next) => {
     try {
         res.clearCookie("refresh_token", {
             httpOnly: true,
-            secure: false, // nên để true nếu dùng HTTPS
+            secure: false,
             sameSite: "strict",
             path: "/",
         });
@@ -93,16 +68,13 @@ const logoutUser = async (req, res) => {
             message: "Đăng xuất thành công!",
         });
     } catch (error) {
-        return res.status(500).json({
-            status: "ERROR",
-            message: error.message || "Internal Server Error",
-        });
+        next(error);
     }
 };
 
 module.exports = {
-    signUpUser,
-    signInUser,
+    registerUser,
+    loginUser,
     handleRefreshToken,
     logoutUser
 };

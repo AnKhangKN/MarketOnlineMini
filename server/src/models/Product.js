@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema({
         default: [],
     },
 
-    category: { type: String, required: true },
+    categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "Category", required: true },
 
     description: { type: String, required: false },
 
@@ -29,7 +29,6 @@ const productSchema = new mongoose.Schema({
 
     priceOptions: {
         type: [priceOptionSchema],
-        validate: [v => v.length > 0, 'Sản phẩm phải có ít nhất một biến thể giá'],
     },
 
     // Số lượng đã bán được

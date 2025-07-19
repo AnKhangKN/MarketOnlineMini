@@ -61,19 +61,6 @@ const SidebarComponent = ({ isShowSidebar }) => {
 
         <div
           className="d-flex align-items-center p-2 cursor-pointer"
-          onClick={() => navigate("/seller/user")}
-        >
-          <div
-            style={{ width: "50px" }}
-            className="d-flex align-items-center justify-content-center me-2"
-          >
-            <TbUserFilled size={20} />
-          </div>
-          <div style={textStyle}>User management</div>
-        </div>
-
-        <div
-          className="d-flex align-items-center p-2 cursor-pointer"
           onClick={() => navigate("/seller/products")}
         >
           <div

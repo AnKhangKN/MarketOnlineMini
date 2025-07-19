@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const throwError = require('../utils/throwError')
 
 dotenv.config();
 
@@ -24,7 +25,7 @@ const handleRefreshToken = async (refreshToken) => {
         const user = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
 
         const access_token = generateAccessToken({ // nếu bọc thêm payload thì bên này cũng phải user.payload?._id.
-            _id: user._id,
+            id: user._id,
             isAdmin: user.isAdmin,
             isSeller: user.isSeller,
         });
@@ -36,10 +37,7 @@ const handleRefreshToken = async (refreshToken) => {
         };
 
     } catch (error) {
-        return {
-            status: "ERROR",
-            message: "Token không hợp lệ hoặc đã hết hạn",
-        };
+        throwError(error.message || "Refresh token không hợp lệ hoặc đã hết hạn", 401);
     }
 };
 

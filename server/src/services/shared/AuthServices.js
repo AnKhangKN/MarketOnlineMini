@@ -1,73 +1,47 @@
 const User = require("../../models/User");
-const {compareSync, hashSync} = require("bcryptjs");
+const { compareSync, hashSync } = require("bcryptjs");
 const {
     generateAccessToken,
-    generateRefreshToken
+    generateRefreshToken,
 } = require("../../utils/jwt");
+const throwError = require("../../utils/throwError");
 
-const signUpUser = (email, password) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const existingUser = await User.findOne({ email });
-            if (existingUser) return reject("Email đã được sử dụng!");
+class AuthServices {
+    async register(email, password) {
+        const existingUser = await User.findOne({ email });
+        if (existingUser) throwError("Email đã được sử dụng!", 400);
 
-            const hashedPassword = hashSync(password, 10);
-            const newUser = await User.create({ email, password: hashedPassword });
+        const hashedPassword = hashSync(password, 10);
+        const newUser = await User.create({ email, password: hashedPassword });
 
-            resolve({
-                message: "Tạo tài khoản thành công!",
-                newUser,
-            });
-        } catch (error) {
-            return reject({
-                message: error.message,
-            });
-        }
-    });
-};
+        return {
+            message: "Tạo tài khoản thành công!",
+            newUser,
+        };
+    }
 
-const signInUser = (email, password) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const user = await User.findOne({ email });
+    async login(email, password) {
+        const user = await User.findOne({ email });
+        if (!user) throwError("Email không tồn tại!", 404);
 
-            if (!user) {
-                return reject({
-                    message: "Email không tồn tại!",
-                });
-            }
+        const isMatch = compareSync(password, user.password);
+        if (!isMatch) throwError("Mật khẩu không đúng!", 401);
 
-            const isMatch = compareSync(password, user.password);
-            if (!isMatch) {
-                return reject({
-                    message: "Mật khẩu không đúng!",
-                });
-            }
+        const payload = {
+            id: user._id,
+            isAdmin: user.isAdmin,
+            isSeller: user.isSeller,
+        };
 
-            const payload = {
-                _id: user._id,
-                isAdmin: user.isAdmin,
-                isSeller: user.isSeller,
-            };
+        const accessToken = await generateAccessToken(payload);
+        const refreshToken = await generateRefreshToken(payload);
 
-            const accessToken = await generateAccessToken(payload);
-            const refreshToken = await generateRefreshToken(payload);
-
-            return resolve({
-                message: "Đăng nhập thành công!",
-                accessToken,
-                refreshToken,
-            });
-
-        } catch (error) {
-            return reject({
-                message: error.message || "Internal Server Error",
-            });
-        }
-    });
-};
-
-module.exports = {
-    signUpUser,
-    signInUser
+        return {
+            message: "Đăng nhập thành công!",
+            accessToken,
+            refreshToken,
+        };
+    }
 }
+
+module.exports = new AuthServices();

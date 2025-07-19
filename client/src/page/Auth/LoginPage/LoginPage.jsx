@@ -56,10 +56,12 @@ const LoginPage = () => {
       return;
     }
 
+    const platform = "web";
+
     try {
       setLoading(true);
 
-      const res = await AuthServices.signIn({ email, password });
+      const res = await AuthServices.signIn({ email, password, platform });
       const { accessToken, message: successMsg } = res;
 
       localStorage.setItem("access_token", accessToken);
