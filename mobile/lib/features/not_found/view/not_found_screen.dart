@@ -10,15 +10,13 @@ class NotFoundScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Not found screen"),
-
-              SizedBox(height: 30,),
+              Text("Not found page"),
 
               ElevatedButton(
-                onPressed: () => context.go('/'),
-                child: Text("Back home"),
+                onPressed: () => context.go('/home'),
+                child: Text("Go home"),
               ),
             ],
           ),

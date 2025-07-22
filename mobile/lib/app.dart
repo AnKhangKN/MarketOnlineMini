@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'core/router/app_routes.dart';
+import 'package:mobile/config/routes/app_routes.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -8,9 +7,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Flutter App',
+      title: 'MartketMiniOnline',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
       routerConfig: AppRoutes.router,
     );
   }
