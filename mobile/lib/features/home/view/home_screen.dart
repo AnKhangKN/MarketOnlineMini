@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:mobile/config/providers/counter_provider.dart';
+import 'package:mobile/shared/widgets/custom_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,44 +12,39 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    super.initState();
+
+    // Truy cập provider sau khi frame build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final counter = context.read<CounterProvider>();
+      print("Giá trị ban đầu: ${counter.count}");
+      // Có thể gọi API hoặc khởi tạo logic ở đây
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final counter = context.watch<CounterProvider>();
+
     return Scaffold(
-      appBar: AppBar(
-        title: GestureDetector(
-          onTap: () {
-            print('Going to search');
-            context.pushNamed('search');
-          },
-          child: Container(
-            height: 40.0,
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            child: const Text(
-              "Tìm kiếm sản phẩm",
-              style: TextStyle(color: Colors.grey),
-            ),
+      appBar: const CustomAppBar(showBackButton: false),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Giá trị: ${counter.count}",
+            style: const TextStyle(fontSize: 32),
           ),
-        ),
-
-          actions: [
-          IconButton(
-            onPressed: () => context.pushNamed('search'),
-
-            icon: Icon(Icons.shopping_cart),
-          ),
-
-          IconButton(
-            onPressed: () => context.go('/chat'),
-            icon: Icon(Icons.chat),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              context.read<CounterProvider>().increment();
+            },
+            child: const Text("Tăng giá trị"),
           ),
         ],
       ),
-
-      body: SafeArea(child: Center(child: Text('Home screen'))),
     );
   }
 }
